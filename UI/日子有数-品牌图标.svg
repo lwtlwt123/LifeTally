@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">日子有数 LifeTally 品牌图标</title>
+  <desc id="desc">炭黑底上的极简日字记录簿符号，中间珊瑚色数据横线代表 LifeTally 每天确认后的生活数据。</desc>
+  <rect width="1024" height="1024" rx="232" fill="#1f2522"/>
+  <path d="M306 262h412a60 60 0 0 1 60 60v380a60 60 0 0 1-60 60H306a60 60 0 0 1-60-60V322a60 60 0 0 1 60-60Z" fill="none" stroke="#fff8ec" stroke-width="72" stroke-linejoin="round"/>
+  <path d="M306 512h412" fill="none" stroke="#ff725e" stroke-width="72" stroke-linecap="round"/>
+</svg>

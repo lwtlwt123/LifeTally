@@ -1,0 +1,373 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3000" height="5200" viewBox="0 0 3000 5200">
+  <title>日子有数 LifeTally - 开发级移动端 UI 总图</title>
+  <defs>
+    <style>
+      .board{fill:#f2eee8}.topbar{fill:#1f2522}.cream{fill:#fff8ec}.paper{fill:#fffdf8}.phoneShell{fill:#171d1a}.screen{fill:#fffaf3}.line{stroke:#e4ded4;stroke-width:1}.lineDark{stroke:#39433d;stroke-width:1}.ink{fill:#1f2522}.muted{fill:#6d776f}.softText{fill:#8f9a91}.white{fill:#fffaf3}.charcoal{fill:#1f2522}.deep{fill:#2a332e}.deep2{fill:#34413a}.coral{fill:#ff725e}.coralText{fill:#d94f39}.coralSoft{fill:#fff0e8}.teal{fill:#147c7e}.tealText{fill:#0d7072}.tealSoft{fill:#e2f3f1}.mint{fill:#5fbf9b}.mintSoft{fill:#e6f5ed}.amber{fill:#f4c95d}.amberText{fill:#9a6900}.amberSoft{fill:#fff4d6}.blueSoft{fill:#e8f0ff}.dangerSoft{fill:#ffe7df}.card{fill:#fffdf8;stroke:#e7dfd2;stroke-width:1}.softCard{fill:#f6f1e8;stroke:#ebe2d5;stroke-width:1}.darkCard{fill:#1f2522}.sheet{fill:#fffdf8;stroke:#e2d9cc;stroke-width:1}.field{fill:#fbf6ee;stroke:#e7dfd2;stroke-width:1}.chip{fill:#f1eadf}.chipOn{fill:#1f2522}.tabOn{fill:#1f2522}.shadow{filter:url(#softShadow)}.t{font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei",Arial,sans-serif}.mono{font-family:"SF Mono","Menlo","Consolas",monospace}.h0{font-size:54px;font-weight:800}.h1{font-size:29px;font-weight:800}.h2{font-size:20px;font-weight:800}.h3{font-size:16px;font-weight:750}.body{font-size:14px;font-weight:600}.small{font-size:12px;font-weight:500}.tiny{font-size:10px;font-weight:500}.display{font-size:46px;font-weight:850}.num{font-size:30px;font-weight:850}.label{font-size:14px;font-weight:800}.note{font-size:12px;font-weight:500}.icon{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}.icon2{fill:none;stroke:currentColor;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#1f2522" flood-opacity=".13"/>
+    </filter>
+    <g id="brand-mark">
+      <rect width="52" height="52" rx="15" fill="#1f2522"/>
+      <path d="M17 13h18a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V17a4 4 0 0 1 4-4Z" fill="none" stroke="#fff8ec" stroke-width="4.5" stroke-linejoin="round"/>
+      <path d="M17 26h18" fill="none" stroke="#ff725e" stroke-width="4.5" stroke-linecap="round"/>
+    </g>
+    <g id="i-home"><path class="icon" d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></g>
+    <g id="i-wallet"><path class="icon" d="M3 7h18v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm0 0a3 3 0 0 1 3-3h12v3M16 13h3"/></g>
+    <g id="i-scan"><path class="icon" d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3M7 12h10"/></g>
+    <g id="i-camera"><path class="icon" d="M4 7h3l2-3h6l2 3h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle class="icon" cx="12" cy="14" r="3"/></g>
+    <g id="i-zap"><path class="icon" d="m13 2-9 12h7l-1 8 9-12h-7z"/></g>
+    <g id="i-cloud-rain"><path class="icon" d="M17 18H7a5 5 0 1 1 1.2-9.86A6 6 0 0 1 19 11a3.5 3.5 0 0 1-2 7Z"/><path class="icon" d="m9 21 1-2m4 2 1-2"/></g>
+    <g id="i-route"><circle class="icon" cx="6" cy="18" r="3"/><circle class="icon" cx="18" cy="6" r="3"/><path class="icon" d="M8 16c4-5 8-5 8-8"/></g>
+    <g id="i-bike"><circle class="icon" cx="5" cy="17" r="3"/><circle class="icon" cx="19" cy="17" r="3"/><path class="icon" d="M5 17h5l3-7h3l3 7M10 17l-2-5h4"/></g>
+    <g id="i-box"><path class="icon" d="M3 7 12 3l9 4-9 5-9-5Z"/><path class="icon" d="M3 7v10l9 4 9-4V7M12 12v9"/></g>
+    <g id="i-search"><circle class="icon" cx="11" cy="11" r="7"/><path class="icon" d="m20 20-4-4"/></g>
+    <g id="i-bell"><path class="icon" d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></g>
+    <g id="i-chart"><path class="icon" d="M3 3v18h18M7 16v-4m5 4V7m5 9v-7"/></g>
+    <g id="i-user"><path class="icon" d="M20 21a8 8 0 0 0-16 0"/><circle class="icon" cx="12" cy="7" r="4"/></g>
+    <g id="i-plus"><path class="icon" d="M12 5v14M5 12h14"/></g>
+    <g id="i-check"><path class="icon" d="m5 12 4 4L19 6"/></g>
+    <g id="i-x"><path class="icon" d="m6 6 12 12M18 6 6 18"/></g>
+    <g id="i-chevron"><path class="icon" d="m9 18 6-6-6-6"/></g>
+    <g id="i-sliders"><path class="icon" d="M4 6h16M4 12h16M4 18h16"/><circle class="icon" cx="9" cy="6" r="2"/><circle class="icon" cx="15" cy="12" r="2"/><circle class="icon" cx="10" cy="18" r="2"/></g>
+    <g id="i-upload"><path class="icon" d="M12 16V4m0 0 5 5m-5-5-5 5M4 20h16"/></g>
+    <g id="i-lock"><rect class="icon" x="4" y="10" width="16" height="11" rx="2"/><path class="icon" d="M8 10V7a4 4 0 0 1 8 0v3"/></g>
+    <g id="i-clock"><circle class="icon" cx="12" cy="12" r="9"/><path class="icon" d="M12 7v5l3 2"/></g>
+    <g id="i-arrow"><path class="icon" d="M5 12h14m-6-6 6 6-6 6"/></g>
+  </defs>
+
+  <rect class="board" width="3000" height="5200"/>
+  <rect class="topbar" width="3000" height="360"/>
+  <g transform="translate(138 88)"><use href="#brand-mark"/></g>
+  <text x="210" y="126" class="t h0 cream">日子有数 LifeTally</text>
+  <text x="210" y="170" class="t body" fill="#c8d2c9">移动端开发级 UI 总图 · 钱、电表、通勤、AI 省钱建议、提醒和物品在同一套产品语言里</text>
+  <text x="2320" y="110" class="t small" fill="#c8d2c9">APP UI SPEC / LifeTally v0.2</text>
+  <text x="2320" y="142" class="t small" fill="#ffbd6e">Phone-first · H5 + App 打包</text>
+  <g transform="translate(138 222)">
+    <rect width="286" height="60" rx="8" fill="#2a332e"/><text x="22" y="25" class="t tiny" fill="#c8d2c9">Typography</text><text x="22" y="45" class="t small cream">PingFang SC / SF Mono</text>
+    <g transform="translate(332 0)"><rect width="342" height="60" rx="8" fill="#2a332e"/><circle cx="30" cy="30" r="10" class="coral"/><circle cx="66" cy="30" r="10" class="teal"/><circle cx="102" cy="30" r="10" class="amber"/><circle cx="138" cy="30" r="10" class="mint"/><text x="166" y="36" class="t small cream">钱 / 通勤 / 价格 / 完成</text></g>
+    <g transform="translate(726 0)"><rect width="360" height="60" rx="8" fill="#2a332e"/><text x="22" y="25" class="t tiny" fill="#c8d2c9">Icons</text><text x="22" y="45" class="t small cream">Lucide 20px · 1.75px · 单线图标</text></g>
+    <g transform="translate(1138 0)"><rect width="524" height="60" rx="8" fill="#2a332e"/><text x="22" y="25" class="t tiny" fill="#c8d2c9">Motion</text><text x="22" y="45" class="t small cream">Action Sheet 280ms 上滑 · 遮罩 56% · 确认后回写数字</text></g>
+  </g>
+
+  <g transform="translate(138 392)">
+    <text x="0" y="0" class="t label ink">核心流程</text>
+    <text x="112" y="0" class="t small muted">今日处理 → OCR 确认 → 金额/读数入账 → 预算/电费更新 → 通勤和提醒触发 → 统计沉淀</text>
+    <line x1="0" y1="34" x2="2700" y2="34" stroke="#d7cfc2" stroke-width="1"/>
+  </g>
+
+  <!-- 01 Home default -->
+  <text x="150" y="502" class="t label ink">01 今日首页</text>
+  <text x="150" y="528" class="t note muted">默认态：先显示需要行动，再显示钱和能源</text>
+  <g transform="translate(150 552)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">8月2日 · 星期日</text>
+    <circle cx="442" cy="70" r="20" class="charcoal"/><g transform="translate(430 58)" color="#fff8ec"><use href="#i-plus"/></g>
+    <text x="36" y="128" class="t h1 ink">今天有 3 件事</text>
+    <rect x="36" y="158" width="428" height="174" rx="16" class="darkCard"/>
+    <text x="60" y="198" class="t small" fill="#c8d2c9">本月还能花</text>
+    <text x="60" y="262" class="t display cream">¥713.60</text>
+    <rect x="60" y="292" width="356" height="8" rx="4" fill="#3d4841"/>
+    <rect x="60" y="292" width="228" height="8" rx="4" class="coral"/>
+    <text x="60" y="318" class="t tiny" fill="#c8d2c9">预算 64% · 比上月少 ¥83</text>
+    <text x="36" y="386" class="t h2 ink">现在要处理</text>
+    <line x1="36" y1="414" x2="464" y2="414" class="line"/>
+    <g transform="translate(36 434)">
+      <g color="#d94f39"><use href="#i-camera"/></g><text x="40" y="18" class="t body ink">电表照片未上传</text><text x="40" y="42" class="t small muted">20:00 前 · 自动估算本月电费</text><text x="366" y="25" class="t small coralText">去拍</text>
+    </g>
+    <line x1="36" y1="502" x2="464" y2="502" class="line"/>
+    <g transform="translate(36 522)">
+      <g color="#147c7e"><use href="#i-cloud-rain"/></g><text x="40" y="18" class="t body ink">下班有雨</text><text x="40" y="42" class="t small muted">雨衣加入清单 · 17:45 提醒</text><text x="374" y="25" class="t small tealText">查看</text>
+    </g>
+    <line x1="36" y1="590" x2="464" y2="590" class="line"/>
+    <g transform="translate(36 610)">
+      <g color="#9a6900"><use href="#i-zap"/></g><text x="40" y="18" class="t body ink">续航不足</text><text x="40" y="42" class="t small muted">剩 12 km · 明天需 18 km</text><text x="366" y="25" class="t small amberText">充电</text>
+    </g>
+    <text x="36" y="714" class="t h2 ink">今日成本</text>
+    <rect x="36" y="742" width="128" height="86" rx="12" class="coralSoft"/><text x="54" y="774" class="t small muted">餐饮</text><text x="54" y="810" class="t num ink">¥33</text>
+    <rect x="184" y="742" width="128" height="86" rx="12" class="tealSoft"/><text x="202" y="774" class="t small muted">电费</text><text x="202" y="810" class="t num ink">¥4.6</text>
+    <rect x="332" y="742" width="132" height="86" rx="12" class="amberSoft"/><text x="350" y="774" class="t small muted">充电</text><text x="350" y="810" class="t num ink">¥7.2</text>
+    <line x1="36" y1="848" x2="464" y2="848" class="line"/>
+    <g transform="translate(52 864)" color="#1f2522"><use href="#i-home"/></g><g transform="translate(142 864)" color="#8f9a91"><use href="#i-wallet"/></g><g transform="translate(232 864)" color="#8f9a91"><use href="#i-bike"/></g><g transform="translate(322 864)" color="#8f9a91"><use href="#i-box"/></g><g transform="translate(414 864)" color="#8f9a91"><use href="#i-user"/></g>
+  </g>
+
+  <!-- 02 Home action sheet -->
+  <text x="1250" y="502" class="t label ink">02 首页 · 快捷入口</text>
+  <text x="1250" y="528" class="t note muted">点击右上角 +，出现底部动作面板</text>
+  <g transform="translate(1250 552)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">8月2日 · 星期日</text>
+    <circle cx="442" cy="70" r="20" class="charcoal"/><g transform="translate(430 58)" color="#fff8ec"><use href="#i-x"/></g>
+    <text x="36" y="128" class="t h1 ink">今天有 3 件事</text>
+    <rect x="36" y="158" width="428" height="250" rx="16" class="softCard"/>
+    <text x="60" y="198" class="t h2 ink">待处理</text><text x="60" y="234" class="t body ink">电表未上传</text><text x="60" y="262" class="t small muted">下班有雨 · 续航不足</text>
+    <rect x="10" y="404" width="480" height="486" rx="38" fill="#1f2522" opacity=".56"/>
+    <rect x="10" y="506" width="480" height="384" rx="34" class="sheet"/>
+    <rect x="218" y="526" width="64" height="5" rx="3" fill="#d7cfc2"/>
+    <text x="36" y="584" class="t h2 ink">记一件事</text>
+    <text x="36" y="612" class="t small muted">所有入口都先进入确认页，避免误记账。</text>
+    <g transform="translate(36 648)">
+      <rect width="204" height="74" rx="14" class="coralSoft"/><g transform="translate(18 24)" color="#d94f39"><use href="#i-wallet"/></g><text x="56" y="32" class="t body ink">记一笔支出</text><text x="56" y="54" class="t small muted">手动输入金额</text>
+      <rect x="224" width="204" height="74" rx="14" class="tealSoft"/><g transform="translate(242 24)" color="#147c7e"><use href="#i-scan"/></g><text x="280" y="32" class="t body ink">扫票据</text><text x="280" y="54" class="t small muted">OCR 待确认</text>
+      <rect y="94" width="204" height="74" rx="14" class="amberSoft"/><g transform="translate(18 118)" color="#9a6900"><use href="#i-camera"/></g><text x="56" y="126" class="t body ink">拍电表</text><text x="56" y="148" class="t small muted">读数转费用</text>
+      <rect x="224" y="94" width="204" height="74" rx="14" class="mintSoft"/><g transform="translate(242 118)" color="#2f8b65"><use href="#i-zap"/></g><text x="280" y="126" class="t body ink">开始充电</text><text x="280" y="148" class="t small muted">续航与成本</text>
+    </g>
+    <text x="36" y="846" class="t tiny muted">动态：上滑 280ms，关闭后保持原页面滚动位置。</text>
+  </g>
+
+  <!-- 03 Money overview -->
+  <text x="2350" y="502" class="t label ink">03 钱 · 月度总览</text>
+  <text x="2350" y="528" class="t note muted">金额优先，确认和估算分开显示</text>
+  <g transform="translate(2350 552)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">账本 · 2026年8月</text><g transform="translate(438 58)" color="#1f2522"><use href="#i-search"/></g>
+    <text x="36" y="128" class="t h1 ink">¥1,286.40</text><text x="36" y="154" class="t small muted">本月已确认支出</text>
+    <rect x="36" y="184" width="428" height="56" rx="28" class="chip"/>
+    <rect x="42" y="190" width="130" height="44" rx="22" class="chipOn"/><text x="84" y="218" class="t small cream">总览</text><text x="212" y="218" class="t small muted">待确认</text><text x="348" y="218" class="t small muted">固定</text>
+    <rect x="36" y="276" width="428" height="178" rx="16" class="card"/>
+    <line x1="62" y1="410" x2="436" y2="410" class="line"/><line x1="62" y1="354" x2="436" y2="354" class="line"/>
+    <rect x="84" y="332" width="34" height="78" rx="6" class="coral"/><rect x="152" y="304" width="34" height="106" rx="6" class="teal"/><rect x="220" y="352" width="34" height="58" rx="6" class="amber"/><rect x="288" y="286" width="34" height="124" rx="6" class="coral"/><rect x="356" y="326" width="34" height="84" rx="6" class="teal"/>
+    <text x="62" y="438" class="t tiny muted">餐饮　　　　 家庭　　　　 通勤　　　　 账单</text>
+    <text x="36" y="510" class="t h2 ink">最近记录</text>
+    <line x1="36" y1="538" x2="464" y2="538" class="line"/>
+    <text x="36" y="576" class="t body ink">早餐铺</text><text x="36" y="600" class="t small muted">今天 08:12 · 餐饮</text><text x="392" y="586" class="t body ink">¥32.50</text>
+    <line x1="36" y1="626" x2="464" y2="626" class="line"/>
+    <text x="36" y="664" class="t body ink">电车充电</text><text x="36" y="688" class="t small muted">今天 07:20 · 通勤</text><text x="404" y="674" class="t body ink">¥7.20</text>
+    <line x1="36" y1="714" x2="464" y2="714" class="line"/>
+    <text x="36" y="752" class="t body ink">电费预估</text><text x="36" y="776" class="t small muted">估算 · 待今日读数确认</text><text x="402" y="762" class="t body softText">¥4.61</text>
+    <rect x="36" y="820" width="428" height="48" rx="24" class="charcoal"/><g transform="translate(132 832)" color="#fff8ec"><use href="#i-scan"/></g><text x="170" y="850" class="t body cream">扫描票据</text>
+  </g>
+
+  <!-- 04 Receipt OCR sheet -->
+  <text x="150" y="1562" class="t label ink">04 票据 OCR · 确认弹窗</text>
+  <text x="150" y="1588" class="t note muted">识别结果不能自动入账，必须人工确认</text>
+  <g transform="translate(150 1612)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">OCR · 微信截图</text>
+    <rect x="36" y="112" width="428" height="292" rx="18" fill="#efe9df"/>
+    <rect x="118" y="148" width="264" height="214" rx="10" class="paper"/>
+    <text x="150" y="202" class="t h3 ink">微信支付凭证</text><line x1="150" y1="224" x2="350" y2="224" class="line"/>
+    <text x="150" y="268" class="t small muted">商户：早餐铺</text><text x="150" y="306" class="t h1 ink">¥32.50</text><text x="150" y="342" class="t tiny muted">OCR confidence 96%</text>
+    <rect x="10" y="366" width="480" height="524" rx="38" fill="#1f2522" opacity=".54"/>
+    <rect x="10" y="494" width="480" height="396" rx="34" class="sheet"/>
+    <rect x="218" y="514" width="64" height="5" rx="3" fill="#d7cfc2"/>
+    <text x="36" y="570" class="t h2 ink">确认这笔消费</text><text x="36" y="598" class="t small muted">确认后写入账本，并同步首页预算。</text>
+    <rect x="36" y="628" width="428" height="68" rx="12" class="coralSoft"/>
+    <text x="58" y="656" class="t small muted">金额</text><text x="160" y="666" class="t num ink">¥32.50</text><text x="380" y="662" class="t small coralText">96%</text>
+    <rect x="36" y="720" width="130" height="44" rx="22" class="chip"/><text x="68" y="748" class="t small ink">早餐铺</text>
+    <rect x="184" y="720" width="130" height="44" rx="22" class="chip"/><text x="222" y="748" class="t small ink">餐饮</text>
+    <rect x="332" y="720" width="132" height="44" rx="22" class="chip"/><text x="370" y="748" class="t small ink">微信</text>
+    <rect x="36" y="806" width="196" height="46" rx="23" class="field"/><text x="96" y="834" class="t small ink">重新识别</text>
+    <rect x="252" y="806" width="212" height="46" rx="23" class="coral"/><text x="318" y="834" class="t small cream">确认入账</text>
+  </g>
+
+  <!-- 05 Meter base -->
+  <text x="1250" y="1562" class="t label ink">05 电表 · 拍照识别</text>
+  <text x="1250" y="1588" class="t note muted">每天上传原图，读数和费用都留痕</text>
+  <g transform="translate(1250 1612)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">家庭能源 · 今日电表</text><g transform="translate(438 58)" color="#1f2522"><use href="#i-upload"/></g>
+    <text x="36" y="128" class="t h1 ink">确认今日读数</text><text x="36" y="154" class="t small muted">识别后必须核对，防止误算电费。</text>
+    <rect x="36" y="190" width="428" height="190" rx="16" fill="#dde4df"/>
+    <rect x="70" y="230" width="360" height="98" rx="7" fill="#313b36"/>
+    <rect x="112" y="256" width="276" height="52" rx="4" fill="#d7ddcf"/>
+    <text x="162" y="293" class="mono" font-size="34" font-weight="800" fill="#1f2522">2818.2</text>
+    <rect x="326" y="248" width="78" height="68" rx="4" fill="none" stroke="#f4c95d" stroke-width="3"/>
+    <rect x="36" y="420" width="428" height="128" rx="16" class="darkCard"/>
+    <text x="60" y="458" class="t small" fill="#c8d2c9">当前总读数</text><text x="60" y="512" class="t display cream">2818.2</text><text x="334" y="506" class="t small" fill="#c8d2c9">OCR 98%</text>
+    <text x="36" y="612" class="t h2 ink">费用规则</text>
+    <line x1="36" y1="640" x2="464" y2="640" class="line"/>
+    <text x="36" y="680" class="t body ink">上次读数</text><text x="378" y="680" class="t body ink">2814.6</text>
+    <line x1="36" y1="706" x2="464" y2="706" class="line"/>
+    <text x="36" y="746" class="t body ink">本期用量</text><text x="386" y="746" class="t body tealText">3.6 度</text>
+    <line x1="36" y1="772" x2="464" y2="772" class="line"/>
+    <text x="36" y="812" class="t body ink">本次费用</text><text x="394" y="812" class="t body coralText">¥4.61</text>
+    <rect x="36" y="842" width="428" height="34" rx="17" class="amberSoft"/><text x="110" y="864" class="t tiny amberText">读数异常时保留原图并进入待处理列表</text>
+  </g>
+
+  <!-- 06 Meter confirm sheet -->
+  <text x="2350" y="1562" class="t label ink">06 电表 OCR · 确认弹窗</text>
+  <text x="2350" y="1588" class="t note muted">读数可编辑，费用即时重算</text>
+  <g transform="translate(2350 1612)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">家庭能源 · OCR</text>
+    <rect x="36" y="112" width="428" height="260" rx="16" fill="#dde4df"/>
+    <rect x="72" y="154" width="356" height="110" rx="7" fill="#313b36"/>
+    <rect x="110" y="184" width="280" height="52" rx="4" fill="#d7ddcf"/><text x="162" y="222" class="mono" font-size="34" font-weight="800" fill="#1f2522">2818.2</text>
+    <rect x="10" y="374" width="480" height="516" rx="34" class="sheet"/>
+    <rect x="218" y="394" width="64" height="5" rx="3" fill="#d7cfc2"/>
+    <text x="36" y="452" class="t h2 ink">确认电表读数</text><text x="36" y="480" class="t small muted">确认后写入家庭能源和本月预算。</text>
+    <rect x="36" y="512" width="428" height="74" rx="12" class="field"/><text x="60" y="542" class="t small muted">本次读数</text><text x="190" y="558" class="t num ink">2818.2</text><text x="378" y="552" class="t small tealText">98%</text>
+    <line x1="36" y1="626" x2="464" y2="626" class="line"/>
+    <text x="36" y="666" class="t body ink">上次读数</text><text x="384" y="666" class="t body ink">2814.6</text>
+    <text x="36" y="708" class="t body ink">本期用量</text><text x="394" y="708" class="t body tealText">3.6 度</text>
+    <text x="36" y="750" class="t body ink">单价规则</text><text x="372" y="750" class="t body ink">¥1.28/度</text>
+    <rect x="36" y="778" width="428" height="68" rx="14" class="darkCard"/>
+    <text x="60" y="806" class="t small" fill="#c8d2c9">本次费用</text><text x="60" y="834" class="t num cream">¥4.61</text><text x="346" y="824" class="t small" fill="#ffbd6e">估算入账</text>
+    <rect x="36" y="862" width="196" height="8" rx="4" class="field"/>
+    <rect x="252" y="858" width="212" height="40" rx="20" class="teal"/><text x="318" y="884" class="t small cream">确认读数</text>
+  </g>
+
+  <!-- 07 Commute -->
+  <text x="150" y="2622" class="t label ink">07 通勤 · 出发建议</text>
+  <text x="150" y="2648" class="t note muted">电车续航、天气、路线和携带清单合并判断</text>
+  <g transform="translate(150 2672)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">通勤 · 明天上班</text><g transform="translate(438 58)" color="#1f2522"><use href="#i-bell"/></g>
+    <text x="36" y="128" class="t h1 ink">07:43 建议出门</text><text x="36" y="154" class="t small muted">目标 07:50 出发 · 家 → 公司</text>
+    <rect x="36" y="190" width="428" height="160" rx="16" class="teal"/>
+    <text x="60" y="228" class="t small cream">电车预计续航</text><text x="60" y="290" class="t display cream">12 km</text><text x="262" y="284" class="t small cream">往返 + 预留需要 18 km</text>
+    <rect x="60" y="314" width="356" height="8" rx="4" fill="#84c8c7"/><rect x="60" y="314" width="146" height="8" rx="4" class="cream"/>
+    <rect x="36" y="386" width="428" height="118" rx="16" class="blueSoft"/>
+    <g transform="translate(60 420)" color="#147c7e"><use href="#i-cloud-rain"/></g><text x="100" y="426" class="t body ink">阴转小雨 · 17-21℃</text><text x="100" y="452" class="t small muted">降雨概率 60% · 雨衣自动加入</text><text x="100" y="478" class="t small tealText">4.6 km · 18 分钟 · 轻度拥堵</text>
+    <rect x="36" y="532" width="428" height="160" rx="16" class="softCard"/>
+    <path d="M70 650c42-78 105-88 166-48 52 34 104 18 182-76" fill="none" stroke="#147c7e" stroke-width="4" stroke-linecap="round"/><circle cx="70" cy="650" r="8" class="mint"/><circle cx="418" cy="526" r="8" class="coral"/>
+    <text x="60" y="672" class="t tiny muted">家</text><text x="404" y="672" class="t tiny muted">公司</text>
+    <text x="36" y="742" class="t h2 ink">出门前</text><line x1="36" y1="770" x2="464" y2="770" class="line"/>
+    <text x="36" y="812" class="t body ink">钥匙　工牌　雨衣</text><text x="344" y="812" class="t small tealText">全部确认</text>
+    <rect x="36" y="840" width="428" height="38" rx="19" class="charcoal"/><text x="176" y="864" class="t small cream">查看充电建议</text>
+  </g>
+
+  <!-- 08 Charge sheet -->
+  <text x="1250" y="2622" class="t label ink">08 通勤 · 充电弹窗</text>
+  <text x="1250" y="2648" class="t note muted">根据续航缺口给出充电时长和费用</text>
+  <g transform="translate(1250 2672)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">通勤 · 续航不足</text><text x="36" y="128" class="t h1 ink">今晚建议充电</text>
+    <rect x="36" y="168" width="428" height="280" rx="18" class="softCard"/>
+    <text x="60" y="216" class="t h3 ink">明日预计消耗 18 km</text><text x="60" y="244" class="t small muted">当前剩余 12 km，建议增加 18 km。</text>
+    <rect x="60" y="290" width="356" height="10" rx="5" fill="#ded7ca"/><rect x="60" y="290" width="148" height="10" rx="5" class="amber"/>
+    <rect x="10" y="430" width="480" height="460" rx="34" class="sheet"/>
+    <rect x="218" y="450" width="64" height="5" rx="3" fill="#d7cfc2"/>
+    <text x="36" y="508" class="t h2 ink">开始充电</text><text x="36" y="536" class="t small muted">点击开始后进入“已充电中”，到点提醒检查。</text>
+    <rect x="36" y="572" width="428" height="86" rx="14" class="amberSoft"/><g transform="translate(60 604)" color="#9a6900"><use href="#i-zap"/></g><text x="100" y="610" class="t body ink">充至可往返</text><text x="100" y="636" class="t small muted">约 1.2 小时 · 预计 ¥7.20</text><text x="374" y="624" class="t small amberText">推荐</text>
+    <text x="36" y="710" class="t body ink">状态</text><text x="368" y="710" class="t small tealText">未开始</text>
+    <line x1="36" y1="736" x2="464" y2="736" class="line"/>
+    <text x="36" y="776" class="t body ink">完成提醒</text><text x="338" y="776" class="t small ink">22:00 开启</text>
+    <rect x="36" y="818" width="196" height="46" rx="23" class="field"/><text x="102" y="846" class="t small ink">晚点再说</text>
+    <rect x="252" y="818" width="212" height="46" rx="23" class="amber"/><text x="320" y="846" class="t small ink">开始充电</text>
+  </g>
+
+  <!-- 09 Items -->
+  <text x="2350" y="2622" class="t label ink">09 生活 · 物品位置</text>
+  <text x="2350" y="2648" class="t note muted">搜索家中物品，并服务出门提醒</text>
+  <g transform="translate(2350 2672)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">生活 · 物品</text><g transform="translate(438 58)" color="#1f2522"><use href="#i-plus"/></g>
+    <text x="36" y="128" class="t h1 ink">东西放哪了</text>
+    <rect x="36" y="160" width="428" height="54" rx="14" class="field"/><g transform="translate(56 176)" color="#8f9a91"><use href="#i-search"/></g><text x="94" y="194" class="t body softText">搜钥匙、螺丝刀、证件</text>
+    <text x="36" y="276" class="t h2 ink">今天要带</text>
+    <rect x="36" y="304" width="428" height="78" rx="14" class="mintSoft"/><g transform="translate(58 330)" color="#2f8b65"><use href="#i-check"/></g><text x="98" y="338" class="t body ink">钥匙 · 工牌 · 雨衣</text><text x="98" y="362" class="t small muted">雨衣因天气自动加入，确认后不再打扰</text>
+    <text x="36" y="444" class="t h2 ink">搜索结果</text>
+    <rect x="36" y="472" width="428" height="160" rx="18" class="darkCard"/>
+    <rect x="60" y="506" width="88" height="88" rx="14" class="amberSoft"/><g transform="translate(92 538)" color="#9a6900"><use href="#i-box"/></g>
+    <text x="176" y="516" class="t h2 cream">备用钥匙</text><text x="176" y="552" class="t body" fill="#ffbd6e">玄关 · 抽屉第二格</text><text x="176" y="580" class="t small" fill="#c8d2c9">最后确认：7月30日</text><text x="176" y="608" class="t small" fill="#84c8c7">可添加照片和别名</text>
+    <text x="36" y="696" class="t h2 ink">常用位置</text>
+    <rect x="36" y="724" width="124" height="82" rx="14" class="tealSoft"/><text x="56" y="756" class="t body ink">玄关</text><text x="56" y="780" class="t small muted">8 件</text>
+    <rect x="188" y="724" width="124" height="82" rx="14" class="coralSoft"/><text x="208" y="756" class="t body ink">书房</text><text x="208" y="780" class="t small muted">14 件</text>
+    <rect x="340" y="724" width="124" height="82" rx="14" class="amberSoft"/><text x="360" y="756" class="t body ink">阳台</text><text x="360" y="780" class="t small muted">6 件</text>
+    <text x="36" y="858" class="t tiny muted">空状态：显示“先添加常用位置”，不显示大插画。</text>
+  </g>
+
+  <!-- 10 Reminders -->
+  <text x="150" y="3682" class="t label ink">10 提醒 · 时间线与弹窗</text>
+  <text x="150" y="3708" class="t note muted">提醒必须可确认、可稍后，不自动替用户完成</text>
+  <g transform="translate(150 3732)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">提醒 · 今日节奏</text><g transform="translate(438 58)" color="#1f2522"><use href="#i-sliders"/></g>
+    <text x="36" y="128" class="t h1 ink">今天什么时候提醒</text>
+    <line x1="68" y1="190" x2="68" y2="620" stroke="#d7cfc2" stroke-width="3"/>
+    <circle cx="68" cy="206" r="9" class="mint"/><text x="96" y="212" class="t body ink">07:43 出门提醒</text><text x="96" y="238" class="t small muted">钥匙、工牌、雨衣 · 一键确认</text>
+    <circle cx="68" cy="330" r="9" class="teal"/><text x="96" y="336" class="t body ink">17:45 下班天气</text><text x="96" y="362" class="t small muted">若下雨，返回清单并提醒带雨衣</text>
+    <circle cx="68" cy="454" r="9" class="coral"/><text x="96" y="460" class="t body ink">20:00 电表未上传</text><text x="96" y="486" class="t small muted">可稍后提醒，不自动生成读数</text>
+    <circle cx="68" cy="578" r="9" class="amber"/><text x="96" y="584" class="t body ink">22:00 充电检查</text><text x="96" y="610" class="t small muted">根据明天路线和续航重新提醒</text>
+    <rect x="36" y="678" width="428" height="158" rx="20" class="darkCard"/>
+    <text x="60" y="724" class="t h2 cream">出门前弹窗</text><text x="60" y="754" class="t small" fill="#c8d2c9">07:43 出现，可确认或稍后。</text>
+    <rect x="60" y="784" width="118" height="32" rx="16" fill="#2a332e"/><text x="88" y="805" class="t tiny cream">已带钥匙</text>
+    <rect x="190" y="784" width="118" height="32" rx="16" fill="#2a332e"/><text x="218" y="805" class="t tiny cream">已带工牌</text>
+    <rect x="320" y="784" width="118" height="32" rx="16" class="amber"/><text x="350" y="805" class="t tiny ink">雨衣未带</text>
+  </g>
+
+  <!-- 11 AI saving insights -->
+  <text x="1250" y="3682" class="t label ink">11 AI分析 · 省钱建议</text>
+  <text x="1250" y="3708" class="t note muted">每条建议显示节省估算、依据和采用动作</text>
+  <g transform="translate(1250 3732)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">AI分析 · 2026年8月</text><g transform="translate(438 58)" color="#1f2522"><use href="#i-chart"/></g>
+    <text x="36" y="128" class="t h1 ink">这个月还能省多少</text><text x="36" y="154" class="t small muted">只看已确认消费，估算会明确标记。</text>
+    <rect x="36" y="188" width="428" height="150" rx="18" class="darkCard"/>
+    <text x="60" y="228" class="t small" fill="#c8d2c9">AI 预计可优化</text><text x="60" y="286" class="t display cream">¥210/月</text><text x="316" y="278" class="t small" fill="#ffbd6e">约 ¥2,520/年</text>
+    <text x="60" y="316" class="t tiny" fill="#c8d2c9">来自奶茶、外卖和未使用订阅；需你确认后才生成规则。</text>
+    <text x="36" y="390" class="t h2 ink">可省钱建议</text>
+    <rect x="36" y="420" width="428" height="168" rx="18" class="coralSoft"/>
+    <text x="60" y="456" class="t h3 ink">奶茶频率可以降一点</text>
+    <text x="60" y="484" class="t small muted">本月 9 次共 ¥162，降到每周 1 次。</text>
+    <text x="60" y="522" class="t h2 coralText">预计月省 ¥90</text><text x="282" y="520" class="t small muted">置信度 82%</text>
+    <rect x="60" y="544" width="150" height="32" rx="16" class="charcoal"/><text x="104" y="565" class="t tiny cream">采用目标</text>
+    <rect x="226" y="544" width="150" height="32" rx="16" class="paper" stroke="#e4ded4"/><text x="270" y="565" class="t tiny ink">不需要</text>
+    <rect x="36" y="610" width="428" height="122" rx="18" class="softCard"/>
+    <text x="60" y="646" class="t h3 ink">2 个订阅疑似没用</text>
+    <text x="60" y="674" class="t small muted">连续 30 天无记录，合计 ¥38/月。</text>
+    <text x="60" y="708" class="t h2 amberText">年省 ¥456</text><text x="308" y="704" class="t small amberText">去确认</text>
+    <text x="36" y="782" class="t h2 ink">依据</text>
+    <rect x="36" y="810" width="124" height="54" rx="12" class="coralSoft"/><text x="54" y="832" class="t tiny muted">奶茶</text><text x="54" y="854" class="t small ink">9 次 / ¥162</text>
+    <rect x="188" y="810" width="124" height="54" rx="12" class="tealSoft"/><text x="206" y="832" class="t tiny muted">外卖</text><text x="206" y="854" class="t small ink">+¥186</text>
+    <rect x="340" y="810" width="124" height="54" rx="12" class="amberSoft"/><text x="358" y="832" class="t tiny muted">订阅</text><text x="358" y="854" class="t small ink">¥38/月</text>
+  </g>
+
+  <!-- 12 Settings -->
+  <text x="2350" y="3682" class="t label ink">12 我的 · 设置与隐私</text>
+  <text x="2350" y="3708" class="t note muted">所有外部能力在服务器，App 只拿结果</text>
+  <g transform="translate(2350 3732)" class="shadow">
+    <rect width="500" height="900" rx="46" class="phoneShell"/>
+    <rect x="10" y="10" width="480" height="880" rx="38" class="screen"/>
+    <rect x="190" y="25" width="120" height="6" rx="3" class="phoneShell"/>
+    <text x="36" y="78" class="t small muted">我的 · 设置</text><g transform="translate(438 58)" color="#1f2522"><use href="#i-sliders"/></g>
+    <text x="36" y="128" class="t h1 ink">按你的生活配置</text>
+    <rect x="36" y="166" width="428" height="94" rx="18" class="darkCard"/>
+    <circle cx="82" cy="213" r="27" class="cream"/><text x="74" y="222" class="t h2 ink">刘</text>
+    <text x="128" y="204" class="t body cream">个人生活账本</text><text x="128" y="230" class="t small" fill="#c8d2c9">本机登录 · 服务器同步</text>
+    <text x="36" y="326" class="t h2 ink">自动提醒</text>
+    <text x="36" y="368" class="t body ink">电表上传</text><text x="304" y="368" class="t small muted">每天 20:00</text><rect x="426" y="350" width="38" height="22" rx="11" class="teal"/><circle cx="450" cy="361" r="8" class="paper"/>
+    <line x1="36" y1="394" x2="464" y2="394" class="line"/>
+    <text x="36" y="436" class="t body ink">下班天气</text><text x="304" y="436" class="t small muted">工作日 17:45</text><rect x="426" y="418" width="38" height="22" rx="11" class="teal"/><circle cx="450" cy="429" r="8" class="paper"/>
+    <line x1="36" y1="462" x2="464" y2="462" class="line"/>
+    <text x="36" y="504" class="t body ink">充电检查</text><text x="304" y="504" class="t small muted">每天 22:00</text><rect x="426" y="486" width="38" height="22" rx="11" class="teal"/><circle cx="450" cy="497" r="8" class="paper"/>
+    <text x="36" y="574" class="t h2 ink">数据与隐私</text>
+    <rect x="36" y="604" width="428" height="96" rx="14" class="mintSoft"/><g transform="translate(60 636)" color="#2f8b65"><use href="#i-lock"/></g><text x="100" y="638" class="t body ink">原图、账单、路线、物品位置</text><text x="100" y="664" class="t small muted">私有保存 · 可导出 · 可删除</text><g transform="translate(430 638)" color="#2f8b65"><use href="#i-chevron"/></g>
+    <rect x="36" y="744" width="202" height="46" rx="23" class="field"/><text x="98" y="772" class="t small ink">导出数据</text>
+    <rect x="262" y="744" width="202" height="46" rx="23" class="dangerSoft"/><text x="318" y="772" class="t small coralText">删除数据</text>
+    <text x="36" y="842" class="t tiny muted">OCR、GPT、天气和地图密钥只在 Node 服务端保存。</text>
+  </g>
+
+  <g transform="translate(138 4880)">
+    <rect width="2724" height="210" rx="18" class="paper" stroke="#e0d7ca"/>
+    <text x="28" y="48" class="t h2 ink">开发标注</text>
+    <text x="28" y="86" class="t small muted">组件：PhoneFrame、TopBar、MoneyHero、TaskList、BottomNav、ActionSheet、ConfirmSheet、MeterPhoto、RouteCard、Timeline、ChartBlock、PrivacyPanel。</text>
+    <text x="28" y="124" class="t small muted">状态：loading 用骨架屏；empty 用短文案 + 主按钮；OCR low confidence 保留弹窗并高亮字段；confirmed 回写金额、读数、图表和提醒状态。</text>
+    <text x="28" y="162" class="t small muted">交互：底部弹窗从底部进入，遮罩点击/下滑/返回键关闭；主按钮固定 46-54px 高；金额、读数使用等宽数字，避免统计页跳动。</text>
+    <text x="28" y="194" class="t tiny softText">颜色含义：珊瑚=钱和待确认，青绿=通勤天气，琥珀=费用规则/充电，薄荷=已完成/隐私安全，炭黑=主动作和品牌。</text>
+  </g>
+</svg>

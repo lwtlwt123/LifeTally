@@ -1,0 +1,882 @@
+openapi: 3.1.0
+info:
+  title: 日子有数 LifeTally API
+  version: 0.2.0
+  description: |
+    用户端和后台管理端的 MVP 接口契约。
+    金额使用整数分 amountFen；表计读数和用量使用十进制字符串。
+    AI 省钱分析只生成建议，用户采用后才创建预算、提醒或省钱目标。
+servers:
+  - url: https://api.example.com
+paths:
+  /api/v1/auth/session:
+    post:
+      tags: [Auth]
+      summary: 用验证码创建用户会话
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [target, code]
+              properties:
+                target:
+                  type: string
+                  description: 邮箱或手机号
+                code:
+                  type: string
+      responses:
+        '200':
+          description: 登录成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+
+  /api/v1/dashboard/today:
+    get:
+      tags: [Dashboard]
+      summary: 获取今日行动、预算和通勤摘要
+      security:
+        - UserBearerAuth: []
+      responses:
+        '200':
+          description: 今日数据
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodayResponse'
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+
+  /api/v1/uploads:
+    post:
+      tags: [Files]
+      summary: 创建私有文件直传意图
+      security:
+        - UserBearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [purpose, mimeType, sizeBytes, sha256]
+              properties:
+                purpose:
+                  type: string
+                  enum: [meter, receipt, item, import]
+                mimeType:
+                  type: string
+                  enum: [image/jpeg, image/png, application/pdf, text/csv]
+                sizeBytes:
+                  type: integer
+                  minimum: 1
+                  maximum: 20971520
+                sha256:
+                  type: string
+      responses:
+        '201':
+          description: 上传地址已创建
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, requestId]
+                properties:
+                  data:
+                    type: object
+                    required: [uploadId, uploadUrl, expiresAt]
+                    properties:
+                      uploadId:
+                        type: string
+                      uploadUrl:
+                        type: string
+                        format: uri
+                      expiresAt:
+                        type: string
+                        format: date-time
+                  requestId:
+                    type: string
+
+  /api/v1/uploads/{uploadId}/complete:
+    post:
+      tags: [Files]
+      summary: 确认直传完成并创建文件资源
+      security:
+        - UserBearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UploadId'
+      responses:
+        '200':
+          description: 文件可供 OCR 或业务资源引用
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      fileId:
+                        type: string
+                      status:
+                        type: string
+                        enum: [ready, rejected]
+                  requestId:
+                    type: string
+
+  /api/v1/ocr/meter-reads:
+    post:
+      tags: [OCR]
+      summary: 创建表计读数 OCR 任务
+      security:
+        - UserBearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [meterId, fileId]
+              properties:
+                meterId:
+                  type: string
+                fileId:
+                  type: string
+      responses:
+        '202':
+          description: OCR 任务已进入队列
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAcceptedResponse'
+
+  /api/v1/jobs/{jobId}:
+    get:
+      tags: [Jobs]
+      summary: 查询当前用户可见的异步任务
+      security:
+        - UserBearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/JobId'
+      responses:
+        '200':
+          description: 任务状态
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/v1/meters/{meterId}/readings/confirm:
+    post:
+      tags: [Meters]
+      summary: 确认读数并按价格规则生成费用交易
+      security:
+        - UserBearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/MeterId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reading, recordedAt, expectedVersion]
+              properties:
+                candidateId:
+                  type: string
+                reading:
+                  type: string
+                  pattern: '^\\d+(\\.\\d+)?$'
+                  example: '2818.2'
+                recordedAt:
+                  type: string
+                  format: date-time
+                priceRuleId:
+                  type: string
+                expectedVersion:
+                  type: integer
+      responses:
+        '200':
+          description: 已确认，费用交易已创建
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      readingId:
+                        type: string
+                      usage:
+                        type: string
+                        example: '3.6'
+                      amountFen:
+                        type: integer
+                        example: 461
+                      transactionId:
+                        type: string
+                  requestId:
+                    type: string
+        '409':
+          $ref: '#/components/responses/VersionConflict'
+        '422':
+          $ref: '#/components/responses/MeterReadingInvalid'
+
+  /api/v1/transactions:
+    get:
+      tags: [Transactions]
+      summary: 查询交易
+      security:
+        - UserBearerAuth: []
+      parameters:
+        - name: month
+          in: query
+          schema:
+            type: string
+            pattern: '^\\d{4}-\\d{2}$'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: 交易列表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionListResponse'
+    post:
+      tags: [Transactions]
+      summary: 创建手动交易
+      security:
+        - UserBearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionInput'
+      responses:
+        '201':
+          description: 交易已创建
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+
+  /api/v1/vehicles/{vehicleId}/charges:
+    post:
+      tags: [Vehicles]
+      summary: 写入一次电车充电记录
+      security:
+        - UserBearerAuth: []
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status, startedAt, rangeBeforeKm, rangeAfterKm]
+              properties:
+                status:
+                  type: string
+                  enum: [completed, skipped]
+                startedAt:
+                  type: string
+                  format: date-time
+                endedAt:
+                  type: string
+                  format: date-time
+                chargedKwh:
+                  type: string
+                  pattern: '^\\d+(\\.\\d+)?$'
+                amountFen:
+                  type: integer
+                  minimum: 0
+                rangeBeforeKm:
+                  type: integer
+                  minimum: 0
+                rangeAfterKm:
+                  type: integer
+                  minimum: 0
+      responses:
+        '201':
+          description: 充电状态和相关报表已更新
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      chargeId:
+                        type: string
+                      estimatedAmountFen:
+                        type: integer
+                      transactionId:
+                        type: string
+                  requestId:
+                    type: string
+
+  /api/v1/ai/spending-insights:
+    get:
+      tags: [AI]
+      summary: 获取 AI 省钱分析、预算风险和提醒优化建议
+      security:
+        - UserBearerAuth: []
+      parameters:
+        - name: month
+          in: query
+          schema:
+            type: string
+            pattern: '^\\d{4}-\\d{2}$'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [new, adopted, dismissed, expired]
+            default: new
+      responses:
+        '200':
+          description: AI 建议列表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIInsightListResponse'
+
+  /api/v1/ai/spending-insights/generate:
+    post:
+      tags: [AI]
+      summary: 手动触发一次 AI 支出分析任务
+      security:
+        - UserBearerAuth: []
+      responses:
+        '202':
+          description: 分析任务已进入队列
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAcceptedResponse'
+
+  /api/v1/ai/suggestions/{suggestionId}/actions:
+    post:
+      tags: [AI]
+      summary: 采用、忽略或稍后查看一条 AI 建议
+      security:
+        - UserBearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/SuggestionId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [adopt, dismiss, remind_later]
+                target:
+                  type: string
+                  enum: [create_saving_goal, create_budget_rule, create_reminder, create_checklist_rule]
+                dismissReason:
+                  type: string
+                  maxLength: 240
+                remindAt:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: 建议状态已更新
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AISuggestionActionResponse'
+
+  /api/v1/reminders/{reminderId}/actions:
+    post:
+      tags: [Reminders]
+      summary: 完成、稍后提醒或跳过一个提醒
+      security:
+        - UserBearerAuth: []
+      parameters:
+        - name: reminderId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [done, snooze, skip]
+                snoozeUntil:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: 提醒状态已变更
+
+  /admin/v1/ops/overview:
+    get:
+      tags: [Admin Operations]
+      summary: 获取后台运行概览
+      security:
+        - AdminBearerAuth: []
+      responses:
+        '200':
+          description: 任务、错误率、通知和存储指标
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      failedJobs:
+                        type: integer
+                      apiErrorRate:
+                        type: number
+                      notificationFailures:
+                        type: integer
+                      storageBytes:
+                        type: integer
+                  requestId:
+                    type: string
+
+  /admin/v1/jobs:
+    get:
+      tags: [Admin Jobs]
+      summary: 查询后台任务，默认不返回敏感 payload
+      security:
+        - AdminBearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [queued, running, retrying, succeeded, failed, cancelled, dead_letter]
+        - name: type
+          in: query
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: 后台任务列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AdminJob'
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  requestId:
+                    type: string
+
+components:
+  securitySchemes:
+    UserBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    AdminBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: AdminJWT
+  parameters:
+    UploadId:
+      name: uploadId
+      in: path
+      required: true
+      schema:
+        type: string
+    MeterId:
+      name: meterId
+      in: path
+      required: true
+      schema:
+        type: string
+    JobId:
+      name: jobId
+      in: path
+      required: true
+      schema:
+        type: string
+    SuggestionId:
+      name: suggestionId
+      in: path
+      required: true
+      schema:
+        type: string
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 16
+        maxLength: 128
+  responses:
+    Unauthenticated:
+      description: 未登录或会话失效
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: 资源不存在
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ValidationError:
+      description: 参数校验失败
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    VersionConflict:
+      description: 数据版本已变化
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    MeterReadingInvalid:
+      description: 表计读数不满足单调增长或确认规则
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    Page:
+      type: object
+      properties:
+        nextCursor:
+          type: [string, 'null']
+        hasMore:
+          type: boolean
+    ErrorResponse:
+      type: object
+      required: [error, requestId]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
+        requestId:
+          type: string
+    SessionResponse:
+      type: object
+      required: [data, requestId]
+      properties:
+        data:
+          type: object
+          required: [accessToken, user]
+          properties:
+            accessToken:
+              type: string
+            expiresInSeconds:
+              type: integer
+              example: 900
+            user:
+              type: object
+              properties:
+                id:
+                  type: string
+                nickname:
+                  type: string
+                timezone:
+                  type: string
+        requestId:
+          type: string
+    TodayResponse:
+      type: object
+      required: [data, requestId]
+      properties:
+        data:
+          type: object
+          properties:
+            monthExpenseFen:
+              type: integer
+            budgetRemainingFen:
+              type: integer
+            actions:
+              type: array
+              maxItems: 3
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    enum: [meter_upload, ocr_confirm, charge, bill_due, commute, checklist, ai_saving_tip]
+                  targetId:
+                    type: string
+                  title:
+                    type: string
+                  cta:
+                    type: string
+                  dueAt:
+                    type: string
+                    format: date-time
+        requestId:
+          type: string
+    JobAcceptedResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            jobId:
+              type: string
+            status:
+              type: string
+              enum: [queued]
+        requestId:
+          type: string
+    JobResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            jobId:
+              type: string
+            status:
+              type: string
+              enum: [queued, running, succeeded, failed]
+            result:
+              type: object
+              additionalProperties: true
+            errorCode:
+              type: [string, 'null']
+        requestId:
+          type: string
+    TransactionInput:
+      type: object
+      required: [direction, amountFen, occurredAt, categoryId, source]
+      properties:
+        direction:
+          type: string
+          enum: [income, expense, transfer]
+        amountFen:
+          type: integer
+          minimum: 1
+        occurredAt:
+          type: string
+          format: date-time
+        categoryId:
+          type: string
+        source:
+          type: string
+          enum: [manual, receipt_ocr, bill_import, meter, charge, recurring_bill]
+        merchant:
+          type: string
+          maxLength: 120
+        paymentMethod:
+          type: string
+          enum: [cash, wechat_pay, alipay, bank_card, other]
+        note:
+          type: string
+          maxLength: 1000
+    TransactionResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Transaction'
+        requestId:
+          type: string
+    TransactionListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        page:
+          $ref: '#/components/schemas/Page'
+        requestId:
+          type: string
+    Transaction:
+      allOf:
+        - $ref: '#/components/schemas/TransactionInput'
+        - type: object
+          properties:
+            id:
+              type: string
+            status:
+              type: string
+              enum: [pending_confirmation, confirmed, voided]
+            createdAt:
+              type: string
+              format: date-time
+    AIInsightListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AIInsight'
+        requestId:
+          type: string
+    AIInsight:
+      type: object
+      required: [id, kind, title, summary, estimatedMonthlySavingFen, confidence, status]
+      properties:
+        id:
+          type: string
+        kind:
+          type: string
+          enum: [unnecessary_spending, recurring_bill, budget_risk, reminder_timing, charge_plan, meter_habit]
+        title:
+          type: string
+          example: 奶茶频率可以降一点
+        summary:
+          type: string
+          example: 本月 9 次共 ¥162，降到每周 1 次预计本月可省 ¥90。
+        reason:
+          type: string
+          example: 该分类本月比近三个月均值高 46%。
+        currentMonthlyFen:
+          type: integer
+          minimum: 0
+        suggestedMonthlyFen:
+          type: integer
+          minimum: 0
+        estimatedMonthlySavingFen:
+          type: integer
+          minimum: 0
+          example: 9000
+        estimatedYearlySavingFen:
+          type: integer
+          minimum: 0
+          example: 108000
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          example: 0.82
+        evidence:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+              value:
+                type: string
+        proposedAction:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [create_saving_goal, create_budget_rule, create_reminder, create_checklist_rule]
+            title:
+              type: string
+            targetMonthlyFen:
+              type: integer
+              minimum: 0
+            reminderTime:
+              type: string
+              format: date-time
+        status:
+          type: string
+          enum: [new, adopted, dismissed, expired]
+        createdAt:
+          type: string
+          format: date-time
+    AISuggestionActionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            suggestionId:
+              type: string
+            status:
+              type: string
+              enum: [adopted, dismissed, scheduled]
+            createdResource:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum: [saving_goal, budget_rule, reminder_rule, checklist_rule]
+                id:
+                  type: string
+        requestId:
+          type: string
+    AdminJob:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [ocr_meter, ocr_receipt, notify, export, import, report, ai_analysis]
+        status:
+          type: string
+        tenantId:
+          type: string
+          description: 仅返回缩略 ID
+        attempts:
+          type: integer
+        maxAttempts:
+          type: integer
+        errorCode:
+          type: [string, 'null']
+        requestId:
+          type: string
